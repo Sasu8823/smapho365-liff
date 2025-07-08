@@ -1,0 +1,18 @@
+{
+    "name": "smapho365-liff",
+    "version": "1.0.0",
+    "description": "LIFF front-end app for smapho365 project",
+    "scripts": {
+        "dev": "vite --host",
+        "build": "vite build",
+        "preview": "vite preview"
+    },
+    "author": "smapho365 dev team",
+    "license": "MIT",
+    "dependencies": {
+        "@line/liff": "^2.23.0"
+    },
+    "devDependencies": {
+        "vite": "^5.2.0"
+    }
+}
