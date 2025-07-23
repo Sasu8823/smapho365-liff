@@ -6,18 +6,23 @@
 // アプリの状態管理
 let appState = {
     selectedPhoto: null,
-    keywords: '',
+    keywords: [],
     messages: [],
     selectedMessageIndex: -1,
     editedMessage: ''
 };
 
+controller = null;
+
 // DOM 要素の取得
 const photoInput = document.getElementById('photoInput');
-const keywordInput = document.getElementById('keywordInput');
+const keywordInput1 = document.getElementById('keywordInput1');
+const keywordInput2 = document.getElementById('keywordInput2');
+const keywordInput3 = document.getElementById('keywordInput3');
 const analyzeBtn = document.getElementById('analyzeBtn');
 const messagesContainer = document.getElementById('messagesContainer');
 const copyBtn = document.getElementById('copyBtn');
+const check_personality = document.getElementById('check_personality');
 
 // LIFF の初期化
 async function initializeLiff() {
@@ -47,74 +52,94 @@ photoInput.addEventListener('change', (event) => {
 function displayPhotoPreview(file) {
     const reader = new FileReader();
     reader.onload = (e) => {
+        const previewContainer = document.querySelector('.photopreview');
+        if (!previewContainer) return;
+
+        // 既存のプレビュー画像を削除
+        previewContainer.innerHTML = '';
+
         const preview = document.createElement('img');
         preview.src = e.target.result;
         preview.style.maxWidth = '200px';
         preview.style.marginTop = '10px';
         preview.style.borderRadius = '8px';
 
-        // 既存のプレビューを削除
-        const existingPreview = document.querySelector('.photo-preview');
-        if (existingPreview) {
-            existingPreview.remove();
-        }
-
-        preview.className = 'photo-preview';
-        photoInput.parentNode.appendChild(preview);
+        previewContainer.appendChild(preview);
     };
     reader.readAsDataURL(file);
 }
 
 // 分析ボタンクリック処理
-analyzeBtn.addEventListener('click', async() => {
-    if (!appState.selectedPhoto && !appState.keywords.trim()) {
+analyzeBtn.addEventListener('click', async () => {
+    if (!appState.selectedPhoto && appState.keywords.length === 0) {
         alert('写真またはキーワードを入力してください。');
         return;
     }
 
+    controller = new AbortController(); // 新しいAbortControllerを生成
+    cancelBtn.style.display = 'inline'; // 停止ボタンを表示
     // ボタンを無効化してローディング表示
     analyzeBtn.disabled = true;
     analyzeBtn.textContent = 'AIがメッセージを作成中...';
 
     try {
-        await generateMessages();
+        await generateMessages(controller.signal);
     } catch (error) {
         console.error('メッセージ生成エラー:', error);
         alert('メッセージの生成に失敗しました。しばらくしてから再度お試しください。');
     } finally {
         // ボタンを元に戻す
         analyzeBtn.disabled = false;
-        analyzeBtn.textContent = 'AIにメッセージを作成してもらう';
+        analyzeBtn.textContent = '再度メッセージ作成する';
+        cancelBtn.style.display = 'none';
+    }
+});
+
+cancelBtn.addEventListener('click', () => {
+    if (controller) {
+        controller.abort(); // 通信を中止
     }
 });
 
 // メッセージ生成処理
-async function generateMessages() {
+async function generateMessages(signal) {
     const formData = new FormData();
 
+    // Check if LIFF is initialized and get userId
+    let userId = '';
+    try {
+        const profile = await liff.getProfile();
+        userId = profile.userId || 'abc';
+        if (userId === 'abc') console.warn('🧪 Using fallback userId "abc" for testing');
+        formData.append('userId', userId);
+    } catch (err) {
+        console.warn(' Failed to get userId from LIFF:', err);
+        userId = 'abc';
+        console.warn('🧪 Using fallback userId "abc" for testing');
+        formData.append('userId', userId);
+    }
+
+    // Attach photo if available
     if (appState.selectedPhoto) {
         formData.append('photo', appState.selectedPhoto);
     }
 
-    if ((appState.keywords || '').trim()) {
-        formData.append('keywords', appState.keywords.trim());
+    // Attach keywords if available
+    if (appState.keywords && appState.keywords.length > 0) {
+        formData.append('keywords', appState.keywords.join(','));
     }
 
-    const userProfile = {
-        callingName: 'お母さん',
-        age: '70代',
-        personality: 'やさしい',
-        tone: 'やわらかい口調'
-    };
-    formData.append('userProfile', JSON.stringify(userProfile));
-
-    // ✅ Move logging *after* all fields are added
-    console.log('Sending form data:');
+    console.log(' Sending to /api/analyze-image:', {
+        hasPhoto: !!appState.selectedPhoto,
+        keywords: appState.keywords,
+        userId
+    });
 
     try {
         const response = await fetch('/api/analyze-image', {
             method: 'POST',
-            body: formData
+            body: formData,
+            signal
         });
 
         if (!response.ok) {
@@ -127,7 +152,7 @@ async function generateMessages() {
         displayMessages();
 
     } catch (error) {
-        console.error('API呼び出しエラー:', error);
+        console.error('API 呼び出しエラー:', error);
         throw error;
     }
 }
@@ -205,7 +230,7 @@ function setupMessageEditing() {
 }
 
 // コピーボタンクリック処理
-copyBtn.addEventListener('click', async() => {
+copyBtn.addEventListener('click', async () => {
     if (appState.selectedMessageIndex === -1) {
         alert('メッセージを選択してください。');
         return;
@@ -243,13 +268,14 @@ function showCopySuccess() {
     successDiv.style.cssText = `
         position: fixed;
         top: 20px;
-        right: 20px;
-        background: #06c755;
+        right: 10px;
+        font-size: 12px;
+        background:rgba(7, 7, 6, 0.25);
         color: white;
-        padding: 10px 20px;
+        padding: 5px 10px;
         border-radius: 5px;
         z-index: 1000;
-        animation: fadeInOut 3s ease-in-out;
+        animation: fadeInOut 5s ease-in-out;
     `;
 
     document.body.appendChild(successDiv);
@@ -281,12 +307,20 @@ function fallbackCopy(text) {
 }
 
 // キーワード入力処理
-keywordInput.addEventListener('input', (event) => {
-    appState.keywords = event.target.value;
+function updateKeywords() {
+    const k1 = keywordInput1.value.trim();
+    const k2 = keywordInput2.value.trim();
+    const k3 = keywordInput3.value.trim();
+    appState.keywords = [k1, k2, k3].filter(Boolean); // Remove empty ones
+}
+
+// Add event listeners
+[keywordInput1, keywordInput2, keywordInput3].forEach(input => {
+    input.addEventListener('input', updateKeywords);
 });
 
 // ページ読み込み時の初期化
-document.addEventListener('DOMContentLoaded', async() => {
+document.addEventListener('DOMContentLoaded', async () => {
     await initializeLiff();
 
     // キーボードショートカット設定

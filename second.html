@@ -1,0 +1,39 @@
+<!-- E:\LINE+ChatGPT\smapho365\liff\second.html -->
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スマホ365 - メッセージ生成</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app">
+        <h1>スマホ365</h1>
+        <!-- 写真アップロード -->
+        <input type="file" id="photoInput" accept="image/*">
+        <!-- キーワード入力 -->
+        <input type="text" id="keywordInput1" placeholder="キーワードを入力">
+        <input type="text" id="keywordInput2" placeholder="キーワードを入力">
+        <input type="text" id="keywordInput3" placeholder="キーワードを入力">
+        <div class="photopreview"></div>
+        <div class="messagesContainer">
+            <button id="analyzeBtn">AIにメッセージを作成してもらう</button>
+            <button id="cancelBtn" style="display:none;">メッセージ生成の停止</button>
+        </div>
+        <!-- メッセージ候補表示・選択・編集 -->
+        <div id="messagesContainer">
+            <!-- ここに3つのメッセージ案が表示される -->
+        </div>
+        <button id="copyBtn" style="display:none;">コピーする</button>
+        <!-- コピー用ボタン -->
+
+    </div>
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

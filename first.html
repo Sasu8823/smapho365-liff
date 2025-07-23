@@ -1,0 +1,95 @@
+<!-- E:\LINE+ChatGPT\smapho365\liff\first.html -->
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>first page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app">
+        <h1>スマホ365</h1>
+        <form action="" id="personalityForm">
+            <h3 class="question_title">親の性格について入力してください。</h3>
+            <div class="personality-input">
+                <label for="callingName">親の呼び名</label>
+                <input type="text" id="callingName" placeholder="例：お母さん、お父さん">
+                <label for="age">年齢層</label>
+                <input type="number" id="age" placeholder="例：70代">
+                <label for="tone">話し方</label>
+                <input type="text" id="tone" placeholder="例：やわらかい口調">
+            </div>
+            <div class="personality-input">
+                <label for="tone">性格</label>
+            </div>
+            <div class="question">
+                <p>1.親は、日常生活の中でユーモアや冗談をよく口にするタイプだと思いますか？</p>
+                <label><input type="radio" name="q1" value="はい"> はい</label>
+                <label><input type="radio" name="q1" value="いいえ"> いいえ</label>
+                <label><input type="radio" name="q1" value="わからない"> わからない</label>
+            </div>
+            <div class="question">
+                <p>2.親は、他人や家族の話をじっくり聞く、聞き上手な一面があると思いますか？</p>
+                <label><input type="radio" name="q2" value="はい"> はい</label>
+                <label><input type="radio" name="q2" value="いいえ"> いいえ</label>
+                <label><input type="radio" name="q2" value="わからない"> わからない</label>
+            </div>
+            <div class="question">
+                <p>3.親は、昔から几帳面で規則正しい生活をしていた印象がありますか？</p>
+                <label><input type="radio" name="q3" value="はい"> はい</label>
+                <label><input type="radio" name="q3" value="いいえ"> いいえ</label>
+                <label><input type="radio" name="q3" value="わからない"> わからない</label>
+            </div>
+            <div class="question">
+                <p>4.親は、写真や手紙、日記など「思い出」を大切にするタイプだと思いますか？</p>
+                <label><input type="radio" name="q4" value="はい"> はい</label>
+                <label><input type="radio" name="q4" value="いいえ"> いいえ</label>
+                <label><input type="radio" name="q4" value="わからない"> わからない</label>
+            </div>
+            <div class="question">
+                <p>5.親は、テレビや新聞などで時事ニュースをよくチェックしていると思いますか？</p>
+                <label><input type="radio" name="q5" value="はい"> はい</label>
+                <label><input type="radio" name="q5" value="いいえ"> いいえ</label>
+                <label><input type="radio" name="q5" value="わからない"> わからない</label>
+            </div>
+            <div class="question">
+                <p>6.親は、最近あまり人と会話する機会が少ないように思いますか？</p>
+                <label><input type="radio" name="q6" value="はい"> はい</label>
+                <label><input type="radio" name="q6" value="いいえ"> いいえ</label>
+                <label><input type="radio" name="q6" value="わからない"> わからない</label>
+            </div>
+            <div class="question">
+                <p>7.親は、スマートフォンや家電などの新しいものに対して苦手意識があると思いますか？</p>
+                <label><input type="radio" name="q7" value="はい"> はい</label>
+                <label><input type="radio" name="q7" value="いいえ"> いいえ</label>
+                <label><input type="radio" name="q7" value="わからない"> わからない</label>
+            </div>
+            <div class="question">
+                <p>8.親は、家族や親せきなどとの関係を大切にしているように思いますか？</p>
+                <label><input type="radio" name="q8" value="はい"> はい</label>
+                <label><input type="radio" name="q8" value="いいえ"> いいえ</label>
+                <label><input type="radio" name="q8" value="わからない"> わからない</label>
+            </div>
+            <div class="question">
+                <p>9.親は、自分のことよりも他人を気遣うことが多いタイプだと思いますか？</p>
+                <label><input type="radio" name="q9" value="はい"> はい</label>
+                <label><input type="radio" name="q9" value="いいえ"> いいえ</label>
+                <label><input type="radio" name="q9" value="わからない"> わからない</label>
+            </div>
+            <div class="question">
+                <p>10.親は、季節の変化や行事（例：桜、お盆、お月見など）に敏感なタイプですか？</p>
+                <label><input type="radio" name="q10" value="はい"> はい</label>
+                <label><input type="radio" name="q10" value="いいえ"> いいえ</label>
+                <label><input type="radio" name="q10" value="わからない"> わからない</label>
+            </div>
+            <button id="check_personality">性格を判定する</button>
+        </form>
+    </div>
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <script src="save-profile.js"></script>
+</body>
+
+</html>
