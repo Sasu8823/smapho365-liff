@@ -74,9 +74,6 @@ button {
     cursor: pointer;
 }
 
-button:disabled {
-    background: #ccc;
-}
 
 .message-text {
     width: 100%;
@@ -85,6 +82,10 @@ button:disabled {
 
 #copyBtn:active {
     opacity: 0.8;
+}
+
+#copyBtn {
+    margin-bottom: 100px;
 }
 
 .question_title {
