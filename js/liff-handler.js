@@ -1,6 +1,6 @@
 export async function initializeLiff() {
     try {
-        await liff.init({ liffId: '2007683839-YM9j8eej' });
+        await liff.init({ liffId: '2007856156-GXQbyd30' });
         console.log('LIFF initialized successfully');
     } catch (error) {
         console.error('LIFF initialization failed:', error);

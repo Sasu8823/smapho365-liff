@@ -14,7 +14,11 @@ a {
 }
 
 .app {
-    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    max-width: 375px;
     min-height: 80vh;
     margin: 2em auto;
     background: #fff;
@@ -27,7 +31,7 @@ h1 {
     font-size: 1.5em;
     margin-bottom: 1em;
     text-align: center;
-    padding: 5px;
+    padding: 5px 50px;
     background-color: #06c755;
     border-radius: 5px;
     color: rgb(253, 250, 50);
@@ -44,7 +48,6 @@ input[type="file"],
 input[type="number"],
 input[type="text"] {
     display: block;
-    margin-bottom: 1em;
     padding: 5px;
     width: 100%;
 }
@@ -54,6 +57,7 @@ input[type="text"] {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 15px;
 }
 
 #messagesContainer {
@@ -68,7 +72,6 @@ button {
     padding: 0.7em 1.2em;
     font-size: 1em;
     cursor: pointer;
-    margin-top: 1em;
 }
 
 button:disabled {
@@ -101,7 +104,6 @@ button:disabled {
     color: white;
     border: none;
     padding: 10px;
-    margin-left: 10px;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -111,10 +113,10 @@ button:disabled {
     color: #000;
     border: none;
     padding: 10px;
-    margin-top: 600px;
-    margin-inline: 20%;
+    margin-top: 100px;
     border-radius: 5px;
     cursor: pointer;
+    text-align: center;
 }
 
 .run-app {
@@ -123,7 +125,97 @@ button:disabled {
     border: none;
     padding: 10px;
     margin-top: 20px;
-    margin-inline: 17%;
+    margin-inline: 15%;
     border-radius: 5px;
     cursor: pointer;
+    text-align: center;
+}
+
+.intro img {
+    width: 100%;
+    height: auto;
+}
+
+.chat-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  background: #f1f1f1;
+  border-radius: 9999px;
+  width: 320px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  margin-bottom: 10px;
+  padding: 5px 10px;
+    bottom: 20px;
+}
+
+.chat-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 6px 10px;
+  border-radius: 9999px;
+  background: white;
+  margin: 0 6px;
+  font-size: 14px;
+}
+
+.send-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #00c084;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+.send-icon {
+  display: inline-block;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.cancel-button {
+  margin-left: 10px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #ddd;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.photopreview {
+    position: relative;
 }
