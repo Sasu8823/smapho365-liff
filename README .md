@@ -20,11 +20,11 @@ LINE × ChatGPT × Vision API で親へのメッセージを自動生成する�
 ## フロントエンド
 - `liff/` ディレクトリにLIFFアプリ
 - 写真アップロード、キーワード入力、メッセージ選択・編集・コピーUI
-npm run dev
+- npm run dev
 ## バックエンド
 - `functions/` ディレクトリにAPI実装
 - `/webhook` (LINE), `/vision`, `/chatgpt` エンドポイント
-npm run start
+- npm run start
 
 ## 運用・開発ガイド
 - ログは開発時のみ簡易出力
