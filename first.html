@@ -13,12 +13,12 @@
     <div class="app">
         <h1>スマホ365</h1>
         <form action="" id="personalityForm">
-            <h3 class="question_title">親の性格について入力してください。</h3>
+            <h3 class="question_title">性格について入力してください。</h3>
             <div class="personality-input">
-                <label for="callingName">親の呼び名</label>
+                <label for="callingName">メッセージの送信相手の呼び名</label>
                 <input type="text" id="callingName" placeholder="例：お母さん、お父さん">
-                <label for="age">年齢層</label>
-                <input type="number" id="age" placeholder="例：70代">
+                <label for="age">年齢</label>
+                <input type="number" id="age" placeholder="例：70">
                 <label for="tone">話し方</label>
                 <input type="text" id="tone" placeholder="例：やわらかい口調">
             </div>
@@ -85,11 +85,11 @@
                 <label><input type="radio" name="q10" value="いいえ"> いいえ</label>
                 <label><input type="radio" name="q10" value="わからない"> わからない</label>
             </div>
-            <button id="check_personality">性格を判定する</button>
+            <button id="check_personality">性格を登録する</button>
         </form>
     </div>
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-    <script src="js/save-profile.js"></script>
+    <script type="module" src="js/save-profile.js"></script>
 </body>
 
 </html>

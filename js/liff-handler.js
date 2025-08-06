@@ -10,9 +10,9 @@ export async function initializeLiff() {
 export async function getUserId() {
     try {
         const profile = await liff.getProfile();
-        return profile.userId || 'abc';
+        return profile.userId || 'ccc';
     } catch (err) {
         console.warn('Failed to get userId:', err);
-        return 'abc';
+        return 'ccc';
     }
 }

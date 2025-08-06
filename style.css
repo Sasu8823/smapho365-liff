@@ -41,6 +41,10 @@ h1 {
     color:#06c755;
 }
 
+.personality-input input {
+    margin-bottom: 1em;
+}
+
 input[type="file"],
 input[type="number"],
 input[type="text"] {
@@ -217,4 +221,9 @@ button {
 
 .photopreview {
     position: relative;
+}
+
+
+#check_personality {
+    margin-top: 1rem;
 }

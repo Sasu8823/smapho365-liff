@@ -1,4 +1,8 @@
 // E:\LINE+ChatGPT\smapho365\liff\save-profile.js
+import { getUserId } from './liff-handler.js';
+    
+const userId = await getUserId();
+
 document.getElementById('check_personality').addEventListener('click', (event) => {
     event.preventDefault();
     console.log('性格診断ボタンがクリックされました');
@@ -13,7 +17,6 @@ document.getElementById('check_personality').addEventListener('click', (event) =
         const selected = document.querySelector(`input[name="q${i}"]:checked`);
         answers[`q${i}`] = selected ? selected.value : null;
     }
-
     const userProfile = {
         callingName,
         age,
@@ -25,7 +28,7 @@ document.getElementById('check_personality').addEventListener('click', (event) =
     fetch('/api/save-profile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userProfile, answers })
+        body: JSON.stringify({ userId, userProfile, answers })
     })
     .then(res => res.json())
     .then(data => {
