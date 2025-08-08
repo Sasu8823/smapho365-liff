@@ -19,9 +19,9 @@ a {
     align-items: center;
     position: relative;
     max-width: 375px;
-    min-height: 85vh;
-    margin: 2em auto;
+    min-height: 100vh;
     padding: 2em;
+    margin-inline: auto;
 }
 
 h1 {
@@ -112,26 +112,29 @@ button {
 }
 
 .personality {
-    background-color: rgb(253, 250, 50);;
+    background-color: rgb(253, 250, 50);
+    border: solid 2px #f74e4e;
     color: #000;
-    border: none;
     padding: 10px;
     margin-top: 100px;
     border-radius: 5px;
     cursor: pointer;
     text-align: center;
+    width: 80%;
+    margin-inline: auto;
 }
 
 .run-app {
     background-color: #06c755;
     color: #fff;
-    border: none;
+    border: solid 2px #f74e4e;
     padding: 10px;
     margin-top: 20px;
-    margin-inline: 15%;
     border-radius: 5px;
     cursor: pointer;
     text-align: center;
+    width: 80%;
+    margin-inline: auto;
 }
 
 .intro img {
@@ -204,6 +207,10 @@ button {
   display: inline-block;
 }
 
+.send-btn {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.979);
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -226,4 +233,256 @@ button {
 
 #check_personality {
     margin-top: 1rem;
+    border: solid 2px #f74e4e;
+    width: 80%;
+    margin-inline: 8%;
+
+}
+
+.save-profile-success-alarm {
+    color: #ffffff;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 1rem;
+    position: fixed;
+    top: 20px;
+    right: 10px;
+    background: rgba(90, 255, 49, 0.822);
+    padding: 5px 10px;
+}
+
+.save-profile-error-alarm {
+    color: #ffffff;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 1rem;
+    position: fixed;
+    top: 20px;
+    right: 10px;
+    background: rgba(255, 66, 66, 0.822);
+    padding: 5px 10px;
+}
+
+  .nav-link-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    color: #41b80a;
+    font-weight: bold;
+    margin: 10px 0;
+
+  }
+
+  .arrow-line {
+    transition: transform 0.3s ease;
+    transform-origin: left;
+  }
+
+  .nav-link-wrapper:hover .arrow-line {
+    transform: scaleX(1.2); /* Slight extension */
+  }
+
+  #statusContainer {
+    margin-top: 30px;
+  }
+
+/* right direct animation */
+/* ===================== */
+/* ===================== */
+/* ===================== */
+/* ===================== */
+
+  *, *:before, *:after {
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+ }
+
+
+.mouse_scroll {
+  display: block;
+  margin: 0 auto;
+  width: 24px;
+  height: 100px;
+  margin-top: 125px;
+}
+
+
+.m_scroll_arrows {
+  display: block;
+  width: 16px;
+  height: 16px;
+  transform: rotate(-45deg); /* Point arrow to the right */
+  border-right: 2px solid rgb(0, 0, 0);
+  border-bottom: 2px solid rgb(0, 0, 0);
+  margin: 4px 0 4px 0;
+}
+
+
+.unu, .doi, .trei
+{
+    -webkit-animation: mouse-scroll 1s infinite;
+    -moz-animation: mouse-scroll 1s infinite;
+    animation: mouse-scroll 1s infinite;
+  
+}
+
+.unu
+{
+  -webkit-animation-delay: .1s;
+  -moz-animation-delay: .1s;
+  -webkit-animation-direction: alternate;
+  
+  animation-direction: alternate;
+  animation-delay: alternate;
+}
+
+.doi
+{
+  -webkit-animation-delay: .2s;
+  -moz-animation-delay: .2s;
+  -webkit-animation-direction: alternate;
+  
+  animation-delay: .2s;
+  animation-direction: alternate;
+  
+}
+
+.trei
+{
+  -webkit-animation-delay: .3s;
+  -moz-animation-delay: .3s;
+  -webkit-animation-direction: alternate;
+  
+  animation-delay: .3s;
+  animation-direction: alternate;
+  
+  
+}
+
+.mouse {
+  height: 42px;
+  width: 24px;
+  border-radius: 14px;
+  transform: none;
+  border: 2px solid rgb(37, 37, 37);
+  top: 170px;
+}
+
+.wheel {
+  height: 5px;
+  width: 2px;
+  display: block;
+  margin: 5px auto;
+  background: rgb(22, 22, 22);
+  position: relative;
+  
+  height: 4px;
+  width: 4px;
+  border: 2px solid #030303;
+  -webkit-border-radius: 8px;
+          border-radius: 8px;
+}
+
+.wheel {
+  -webkit-animation: mouse-wheel 0.6s linear infinite;
+  -moz-animation: mouse-wheel 0.6s linear infinite;
+  animation: mouse-wheel 0.6s linear infinite;
+}
+
+@-webkit-keyframes mouse-wheel{
+   0% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(6px);
+    -ms-transform: translateY(6px);
+    transform: translateY(6px);
+  }
+}
+@-moz-keyframes mouse-wheel {
+  0% { top: 1px; }
+  25% { top: 2px; }
+  50% { top: 3px;}
+  75% { top: 2px;}
+  100% { top: 1px;}
+}
+@-o-keyframes mouse-wheel {
+
+   0% { top: 1px; }
+  25% { top: 2px; }
+  50% { top: 3px;}
+  75% { top: 2px;}
+  100% { top: 1px;}
+}
+@keyframes mouse-wheel {
+
+   0% { top: 1px; }
+  25% { top: 2px; }
+  50% { top: 3px;}
+  75% { top: 2px;}
+  100% { top: 1px;}
+}
+
+@-webkit-keyframes mouse-scroll {
+
+  0%   { opacity: 0;}
+  50%  { opacity: .5;}
+  100% { opacity: 1;}
+}
+@-moz-keyframes mouse-scroll {
+
+  0%   { opacity: 0; }
+  50%  { opacity: .5; }
+  100% { opacity: 1; }
+}
+@-o-keyframes mouse-scroll {
+
+  0%   { opacity: 0; }
+  50%  { opacity: .5; }
+  100% { opacity: 1; }
+}
+@keyframes mouse-scroll {
+
+  0%   { opacity: 0; }
+  50%  { opacity: .5; }
+  100% { opacity: 1; }
+}
+
+.arrow-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#keywordNotification {
+  position: fixed;              /* Take it out of normal flow */
+  right: -100%;                 /* Start completely off-screen */
+  top: 20px;                    /* You can adjust this */
+  z-index: 9999;
+  background: white;
+  padding: 10px 16px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  color: #00c851;
+  font-weight: bold;
+  transition: right 0.5s ease, opacity 0.5s ease;
+  opacity: 0;
+}
+
+/* Slide in */
+#keywordNotification.show {
+  right: 20px;   /* Slides in from the right */
+  opacity: 1;
+}
+
+/* Slide out */
+#keywordNotification.hide {
+  right: -100%;
+  opacity: 0;
 }

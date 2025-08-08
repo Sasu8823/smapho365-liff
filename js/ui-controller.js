@@ -91,7 +91,7 @@ export function showCopySuccess() {
     top: 20px;
     right: 10px;
     font-size: 12px;
-    background: rgba(7, 7, 6, 0.25);
+    background: rgba(62, 173, 86, 0.96);
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
@@ -178,6 +178,8 @@ export function setupKeyboardShortcuts(analyzeBtn, copyBtn) {
   document.addEventListener('keydown', (event) => {
     if (event.ctrlKey && event.key === 'Enter') {
       event.preventDefault();
+      console.log('Ctrl+Enter pressed');
+      
       if (!analyzeBtn.disabled) {
         analyzeBtn.click();
       }

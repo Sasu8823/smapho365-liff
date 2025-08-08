@@ -1,85 +1,73 @@
-// js/app.js
-import { initializeLiff } from './liff-handler.js';
-import { setupKeywordInputs, setupAnalyzeButton, setupKeyboardShortcuts } from './ui-controller.js';
+// app.js
 import { appState } from './app-state.js';
-
-console.log(appState.keywords);  // ['dog', 'happy', ...]
-
-// === 写真プレビュー表示 ===
-function displayPhotoPreview(file) {
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const previewContainer = document.querySelector('.photopreview');
-    if (!previewContainer) return;
-
-    previewContainer.innerHTML = ''; // 既存のプレビュー削除
-
-    const preview = document.createElement('img');
-    preview.src = e.target.result;
-    preview.style.maxWidth = '200px';
-    preview.style.marginTop = '10px';
-    preview.style.borderRadius = '8px';
-
-    // Optional: 画像削除ボタン
-    const removeButton = document.createElement('button');
-    removeButton.textContent = 'X';
-    removeButton.style.right = '-15px';
-    removeButton.style.top = '-5px';
-    removeButton.style.position = 'absolute';
-    removeButton.style.display = 'block';
-    removeButton.onclick = () => {
-      appState.selectedPhoto = null;
-      previewContainer.innerHTML = '';
-      document.getElementById('photoInput').value = '';
-    };
-
-    previewContainer.appendChild(preview);
-    previewContainer.appendChild(removeButton);
-  };
-  reader.readAsDataURL(file);
-}
-
-// === ページ読み込み時の初期化 ===
-document.addEventListener('DOMContentLoaded', async () => {
-  try {
-    await initializeLiff();
-
-    setupKeywordInputs(appState);
-    setupAnalyzeButton(appState);
-
-    // DOM 要素の取得
-    const photoInput = document.getElementById('photoInput');
-    const addPhotoButton = document.getElementById('addPhotoButton');
-    const analyzeBtn = document.getElementById('analyzeBtn');
-    const copyBtn = document.getElementById('copyBtn');
+import { setupKeyboardShortcuts } from './ui-controller.js';
+import { generateMessages } from './message-generator.js';
 
 
-    // Addボタンでファイル選択をトリガー
-    if (addPhotoButton && photoInput) {
-      addPhotoButton.addEventListener('click', () => photoInput.click());
+document.addEventListener("DOMContentLoaded", () => {
+  const photoInput = document.getElementById("photoInput");
+  const addPhotoButton = document.getElementById("addPhotoButton");
 
-      photoInput.addEventListener('change', (event) => {
-        const file = event.target.files[0];
-        if (file) {
-          appState.selectedPhoto = file;
-          console.log('写真が選択されました:', file.name);
-          displayPhotoPreview(file);
-        }
-      });
+
+  // Photo selection
+  addPhotoButton.addEventListener("click", () => {
+    photoInput.click();
+  });
+
+  photoInput.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      appState.selectedPhoto = file;
+
+      // Show preview
+      const reader = new FileReader();
+      reader.onload = () => {
+        document.querySelector(".photopreview").innerHTML = `<img src="${reader.result}" width="300px"/>`;
+      };
+      reader.readAsDataURL(file);
     }
-
-    setupKeyboardShortcuts(analyzeBtn, copyBtn);
-
-  } catch (err) {
-    console.error('初期化エラー:', err);
-  }
+  });
 });
 
-// === エラーハンドリング ===
-window.addEventListener('error', (event) => {
-  console.error('アプリケーションエラー:', event.error);
+// After 3 keywords are entered...
+document.addEventListener("threeKeywordsEntered", () => {
+  const analyzeBtn = document.getElementById("analyzeBtn");
+  const copyBtn = document.getElementById("copyBtn");
+  const cancelBtn = document.getElementById('cancelBtn');
+  const inputEl = document.getElementById("keywordInput");
+  const buttonEl = document.getElementById("analyzeBtn");
+
+
+  let controller; //  Declare here so both handlers can use it
+
+  analyzeBtn.disabled = false;
+
+  setupKeyboardShortcuts(analyzeBtn, copyBtn);
+
+  analyzeBtn.addEventListener("click", async () => {
+    try {
+      analyzeBtn.querySelector(".spinner").style.display = "inline-block";
+      cancelBtn.style.display = 'inline-block';
+
+      controller = new AbortController(); //  Assign here
+      await generateMessages(appState, controller.signal);
+    } catch (err) {
+      console.error("メッセージ生成失敗:", err);
+    } finally {
+      analyzeBtn.querySelector(".spinner").style.display = "none";
+      cancelBtn.style.display = 'none'; //  Hide cancel button again
+      inputEl.disabled = false; // Re-enable input
+      buttonEl.disabled = false; // now used to "Send"
+
+    }
+  }, { once: true });
+
+  cancelBtn.addEventListener('click', () => {
+    if (controller) {
+      controller.abort();
+      console.log("処理をキャンセルしました");
+      inputEl.disabled = false; // Re-enable input
+    }
+  });
 });
 
-window.addEventListener('unhandledrejection', (event) => {
-  console.error('未処理のPromise拒否:', event.reason);
-});
