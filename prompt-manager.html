@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>プロンプト管理</title>
+<link rel="stylesheet" href="prompt-manager.css">
+</head>
+<body>
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <h2>ログイン</h2>
+        <input type="text" id="username" placeholder="ユーザー名">
+        <input type="password" id="password" placeholder="パスワード">
+        <button onclick="login()">ログイン</button>
+    </div>
+</div>
+
+<!-- Main UI (hidden until login) -->
+<div id="mainUI" class="container hidden">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <button class="sidebar-btn">プロンプト</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="prompt-list-container">
+            <h3>プロンプト一覧</h3>
+
+            <!-- Prompt Items -->
+            <div class="prompt-item">
+                <div class="prompt-text"></div>
+                <div class="buttons">
+                    <button class="edit-btn">編集</button>
+                    <button class="delete-btn">削除</button>
+                </div>
+            </div>
+
+            <div class="prompt-item">
+                <div class="prompt-text"></div>
+                <div class="buttons">
+                    <button class="edit-btn">編集</button>
+                    <button class="delete-btn">削除</button>
+                </div>
+            </div>
+
+            <div class="prompt-item">
+                <div class="prompt-text"></div>
+                <div class="buttons">
+                    <button class="edit-btn">編集</button>
+                    <button class="delete-btn">削除</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Add New Button -->
+        <button class="add-btn">新規追加</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+<script src="prompt-crud.js"></script>
+</body>
+</html>
