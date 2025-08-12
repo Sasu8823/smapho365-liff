@@ -1,68 +1,75 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>プロンプト管理</title>
-<link rel="stylesheet" href="prompt-manager.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プロンプト管理</title>
+    <link rel="stylesheet" href="prompt-manager.css">
 </head>
+
 <body>
 
-<!-- Login Modal -->
-<div id="loginModal" class="modal">
-    <div class="modal-content">
-        <h2>ログイン</h2>
-        <input type="text" id="username" placeholder="ユーザー名">
-        <input type="password" id="password" placeholder="パスワード">
-        <button onclick="login()">ログイン</button>
-    </div>
-</div>
-
-<!-- Main UI (hidden until login) -->
-<div id="mainUI" class="container hidden">
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <button class="sidebar-btn">プロンプト</button>
-    </div>
-
-    <!-- Main Content -->
-    <div class="main-content">
-        <div class="prompt-list-container">
-            <h3>プロンプト一覧</h3>
-
-            <!-- Prompt Items -->
-            <div class="prompt-item">
-                <div class="prompt-text"></div>
-                <div class="buttons">
-                    <button class="edit-btn">編集</button>
-                    <button class="delete-btn">削除</button>
-                </div>
-            </div>
-
-            <div class="prompt-item">
-                <div class="prompt-text"></div>
-                <div class="buttons">
-                    <button class="edit-btn">編集</button>
-                    <button class="delete-btn">削除</button>
-                </div>
-            </div>
-
-            <div class="prompt-item">
-                <div class="prompt-text"></div>
-                <div class="buttons">
-                    <button class="edit-btn">編集</button>
-                    <button class="delete-btn">削除</button>
-                </div>
-            </div>
-
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h2>ログイン</h2>
+            <input type="text" id="username" placeholder="ユーザー名">
+            <input type="password" id="password" placeholder="パスワード">
+            <button onclick="login()">ログイン</button>
         </div>
-
-        <!-- Add New Button -->
-        <button class="add-btn">新規追加</button>
     </div>
-</div>
+        <header>
+            <h1>プロンプト管理</h1>
+        </header>
+    <!-- Main UI (hidden until login) -->
+    <div id="mainUI" class="container hidden">
 
-<script src="script.js"></script>
-<script src="prompt-crud.js"></script>
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="prompt-list-header">
+                <h3>プロンプト一覧</h3>
+
+            </div>
+
+            <div class="prompt-list-container">
+                <!-- Prompt Item Example -->
+                <div class="prompt-item">
+                    <div class="prompt-text">これはテスト用のプロンプトです。</div>
+                    <div class="buttons">
+                        <button class="edit-btn">✏️ 編集</button>
+                        <button class="delete-btn">🗑 削除</button>
+                    </div>
+                </div>
+
+                <div class="prompt-item">
+                    <div class="prompt-text">もう一つのサンプルプロンプト。</div>
+                    <div class="buttons">
+                        <button class="edit-btn">✏️ 編集</button>
+                        <button class="delete-btn">🗑 削除</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="add-prompt-container">
+            <button class="add-btn">＋ 新規追加</button>
+        </div>
+    </div>
+    <!-- Add Prompt Modal -->
+    <div id="promptModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2>プロンプト</h2>
+            <div class="promptText">
+                <textarea id="promptText" placeholder="ここにプロンプトを入力..."></textarea>
+            </div>
+            <div class="btn-group">
+                <button id="promptSubmitBtn">追加</button>
+                <button id="promptCancelBtn">キャンセル</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="prompt-crud.js"></script>
 </body>
+
 </html>

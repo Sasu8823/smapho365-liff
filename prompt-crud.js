@@ -1,56 +1,72 @@
-async function fetchPrompts() {
-    const res = await fetch('/api/prompts', { credentials: 'include' });
-    const prompts = await res.json();
+document.addEventListener('DOMContentLoaded', () => {
+    const promptModal = document.getElementById('promptModal');
+    const promptText = document.getElementById('promptText');
+    const promptSubmitBtn = document.getElementById('promptSubmitBtn');
+    const promptCancelBtn = document.getElementById('promptCancelBtn');
 
-    const container = document.querySelector('.prompt-list-container');
-    container.innerHTML = '<h3>プロンプト一覧</h3>'; // reset
+    let editId = null; // track if editing
 
-    prompts.forEach(p => {
-        const div = document.createElement('div');
-        div.className = 'prompt-item';
-        div.innerHTML = `
-            <div class="prompt-text">${p.text}</div>
-            <div class="buttons">
-                <button class="edit-btn" onclick="editPrompt(${p.id}, '${p.text}')">編集</button>
-                <button class="delete-btn" onclick="deletePrompt(${p.id})">削除</button>
-            </div>
-        `;
-        container.appendChild(div);
+    // Show modal for adding
+    document.querySelector('.add-btn').addEventListener('click', () => {
+        editId = null;
+        promptText.value = '';
+        promptSubmitBtn.textContent = '追加';
+        promptModal.style.display = 'flex';
     });
-}
 
+    // Save prompt (add or edit)
+    promptSubmitBtn.addEventListener('click', async () => {
+        const text = promptText.value.trim();
+        if (!text) return alert('プロンプトを入力してください。');
 
-document.querySelector('.add-btn').addEventListener('click', async () => {
-    const text = prompt('新しいプロンプトを入力:');
-    if (!text) return;
-    await fetch('/api/prompts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ text })
+        if (editId) {
+            // edit mode
+            await fetch(`/api/prompts/${editId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ text })
+            });
+        } else {
+            // add mode
+            await fetch('/api/prompts', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ text })
+            });
+        }
+
+        promptModal.style.display = 'none';
+        fetchPrompts();
     });
-    fetchPrompts();
+
+    // Cancel modal
+    promptCancelBtn.addEventListener('click', () => {
+        promptModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === promptModal) {
+            promptModal.style.display = 'none';
+        }
+    });
+
+    // expose editPrompt to global scope
+    window.editPrompt = function(id, oldText) {
+        editId = id;
+        promptText.value = oldText;
+        promptSubmitBtn.textContent = '更新';
+        promptModal.style.display = 'flex';
+    }
+
+    // expose deletePrompt
+    window.deletePrompt = async function(id) {
+        if (!confirm('このプロンプトを削除しますか？')) return;
+        await fetch(`/api/prompts/${id}`, {
+            method: 'DELETE',
+            credentials: 'include'
+        });
+        fetchPrompts();
+    }
 });
-
-
-async function editPrompt(id, oldText) {
-    const text = prompt('プロンプトを編集:', oldText);
-    if (text === null) return;
-    await fetch(`/api/prompts/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ text })
-    });
-    fetchPrompts();
-}
-
-
-async function deletePrompt(id) {
-    if (!confirm('このプロンプトを削除しますか？')) return;
-    await fetch(`/api/prompts/${id}`, {
-        method: 'DELETE',
-        credentials: 'include'
-    });
-    fetchPrompts();
-}
